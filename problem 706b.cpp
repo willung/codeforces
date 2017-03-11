@@ -27,8 +27,10 @@ int main(void) {
         sorted_prices[i] = prices[i];
     }
 
-    merge_sort(prices,sorted_prices,0,n_shops-1);
+    merge_sort(prices,sorted_prices,0,n_shops);
 
+    cout << sorted_prices[0] << endl;
+    
     cin >> n_days;
     for (i=0; i<n_days; i++) {
         cin >> coins[i];
@@ -39,9 +41,9 @@ int main(void) {
 }
 
 void merge_sort(int* unsorted_array, int* sorted_array, int start, int end) {
-    int middle = (start+end)/2;  //middle is integer, so floor
+    int middle = (start+end-1)/2;  //middle is integer, so floor
     //do nothing if array of length 1 or 2
-    if (end-start == 0) {
+    if (end-start == 1) {
         return; 
     }
     
@@ -52,10 +54,10 @@ void merge_sort(int* unsorted_array, int* sorted_array, int start, int end) {
 }
 
 void merge_arrays(int* unsorted_array, int* sorted_array, int start, int end) {
-    int i, middle = (start+end)/2, left_value, right_value;
+    int i, middle = (start+end-1)/2, left_value, right_value;
     int left_run=start, right_run=middle+1;
 
-    for (i=start; i<=end; i++) {
+    for (i=start; i<end; i++) {
         left_value = unsorted_array[left_run];
         right_value = unsorted_array[right_run];
         if (left_run <= middle && (right_run > end || left_value < right_value)) {
