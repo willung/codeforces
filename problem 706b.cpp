@@ -15,7 +15,7 @@ void merge_sort(int* unsorted_array, int* sorted_array, int start, int end);
 
 void merge_arrays(int* unsorted_array, int* sorted_array, int start, int end); 
 
-void binary_search(int* search_array, int item, int start, int end); 
+int binary_search(int* search_array, int item, int start, int end); 
 
 int main(void) {
     int i, j, prices[MAX_SHOPS], sorted_prices[MAX_SHOPS], n_shops, n_days, sum_shops=0, index=0;
@@ -28,11 +28,12 @@ int main(void) {
     }
 
     merge_sort(prices,sorted_prices,0,n_shops-1);
-    
-    for (i=0; i<n_shops; i++) {
-        cout << sorted_prices[i] << endl;
+
+    cin >> n_days;
+    for (i=0; i<n_days; i++) {
+        cin >> coins[i];
+        cout << binary_search(sorted_prices,coins[i],0,n_shops)+1 << endl;
     }
-    
     
     return 0;
 }
@@ -66,4 +67,37 @@ void merge_arrays(int* unsorted_array, int* sorted_array, int start, int end) {
         }
     }
 
+}
+
+int binary_search(int* search_array, int item, int start, int end) {
+    int left=start,right=end,middle;
+    
+    //value smaller than entire array
+    if (item < search_array[start]) {
+        return -1;
+    }
+    
+    //value larger than entire array
+    if (item >= search_array[end-1]) {
+        return end-1;
+    }
+    
+    //binary search
+    while (right-left>1) {
+        middle = left + (right-left)/2;
+        if (search_array[middle] <= item) {
+           left=middle;
+        } else {
+           right=middle;
+        }
+    } 
+    
+    //exact match
+    if (search_array[left]==item) {
+        return left;
+    }
+    //value in between numbers
+    if (search_array[left] < item && item < search_array[left+1]) {
+        return left;
+    }
 }
